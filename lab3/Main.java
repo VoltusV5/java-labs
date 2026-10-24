@@ -3,6 +3,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class Main {
     private static final Scanner INPUT = new Scanner(System.in);
@@ -248,11 +249,19 @@ public class Main {
         Args:
             machine: выбранная кофемашина.
         */
-        CoffeeType[] types = machine.getAvailableCoffeeTypes();
-        for (int i = 0; i < types.length; i++) {
-            System.out.println((i + 1) + ". " + types[i]);
+        Set<CoffeeType> types = machine.getAvailableCoffeeTypes();
+        int number = 1;
+        for (CoffeeType type : types) {
+            System.out.println(number++ + ". " + type);
         }
-        machine.selectCoffee(types[readInt("Напиток: ", 1, types.length) - 1]);
+        int choice = readInt("Напиток: ", 1, types.size());
+        for (CoffeeType type : types) {
+            if (choice == 1) {
+                machine.selectCoffee(type);
+                return;
+            }
+            choice--;
+        }
     }
 
     private static void addWater(CoffeeMachine machine) {

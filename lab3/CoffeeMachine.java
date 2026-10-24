@@ -1,5 +1,6 @@
 // CoffeeMachine.java
 
+import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class CoffeeMachine {
@@ -187,8 +188,15 @@ public abstract class CoffeeMachine {
         Выбирает случайную температуру и доступный напиток.
         */
         temperature = randomInt(MIN_TEMPERATURE, MAX_TEMPERATURE);
-        CoffeeType[] types = getAvailableCoffeeTypes();
-        selectCoffee(types[randomInt(0, types.length - 1)]);
+        Set<CoffeeType> types = getAvailableCoffeeTypes();
+        int index = randomInt(0, types.size() - 1);
+        for (CoffeeType type : types) {
+            if (index == 0) {
+                selectCoffee(type);
+                break;
+            }
+            index--;
+        }
     }
 
     protected final void checkPreparation(int waterNeeded) {
@@ -324,7 +332,7 @@ public abstract class CoffeeMachine {
     // Название конкретного типа устройства.
     public abstract String getDeviceType();
     // Напитки, доступные для конкретного типа устройства.
-    public abstract CoffeeType[] getAvailableCoffeeTypes();
+    public abstract Set<CoffeeType> getAvailableCoffeeTypes();
     // Проверка поддержки напитка конкретным типом устройства.
     public abstract boolean supports(CoffeeType type);
     // Приготовление напитка по правилам конкретного типа устройства.

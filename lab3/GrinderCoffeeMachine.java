@@ -1,5 +1,8 @@
 // GrinderCoffeeMachine.java
 
+import java.util.EnumSet;
+import java.util.Set;
+
 public final class GrinderCoffeeMachine extends CoffeeMachine {
     public static final int MIN_BEAN_CAPACITY = 30;
     public static final int MAX_BEAN_CAPACITY = 1000;
@@ -192,12 +195,12 @@ public final class GrinderCoffeeMachine extends CoffeeMachine {
     @Override
     public String getDeviceType() { return "Кофемашина с кофемолкой"; }
     @Override
-    public CoffeeType[] getAvailableCoffeeTypes() {
-        return new CoffeeType[] {CoffeeType.ESPRESSO, CoffeeType.AMERICANO};
+    public Set<CoffeeType> getAvailableCoffeeTypes() {
+        return EnumSet.of(CoffeeType.ESPRESSO, CoffeeType.AMERICANO);
     }
     @Override
     public boolean supports(CoffeeType type) {
-        return type == CoffeeType.ESPRESSO || type == CoffeeType.AMERICANO;
+        return getAvailableCoffeeTypes().contains(type);
     }
 
     @Override

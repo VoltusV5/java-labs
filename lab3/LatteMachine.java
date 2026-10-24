@@ -1,5 +1,8 @@
 // LatteMachine.java
 
+import java.util.EnumSet;
+import java.util.Set;
+
 public final class LatteMachine extends CoffeeMachine {
     public static final int MIN_MILK_CAPACITY = 200;
     public static final int MAX_MILK_CAPACITY = 1500;
@@ -190,12 +193,12 @@ public final class LatteMachine extends CoffeeMachine {
     @Override
     public String getDeviceType() { return "Латте-машина"; }
     @Override
-    public CoffeeType[] getAvailableCoffeeTypes() {
-        return new CoffeeType[] {CoffeeType.ESPRESSO, CoffeeType.LATTE, CoffeeType.CAPPUCCINO};
+    public Set<CoffeeType> getAvailableCoffeeTypes() {
+        return EnumSet.of(CoffeeType.ESPRESSO, CoffeeType.LATTE, CoffeeType.CAPPUCCINO);
     }
     @Override
     public boolean supports(CoffeeType type) {
-        return type == CoffeeType.ESPRESSO || type == CoffeeType.LATTE || type == CoffeeType.CAPPUCCINO;
+        return getAvailableCoffeeTypes().contains(type);
     }
 
     @Override

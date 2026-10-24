@@ -1,5 +1,8 @@
 // DripCoffeeMaker.java
 
+import java.util.EnumSet;
+import java.util.Set;
+
 public final class DripCoffeeMaker extends CoffeeMachine {
     public static final int MIN_GROUND_CAPACITY = 30;
     public static final int MAX_GROUND_CAPACITY = 500;
@@ -170,9 +173,9 @@ public final class DripCoffeeMaker extends CoffeeMachine {
     @Override
     public String getDeviceType() { return "Капельная кофеварка"; }
     @Override
-    public CoffeeType[] getAvailableCoffeeTypes() { return new CoffeeType[] {CoffeeType.FILTER}; }
+    public Set<CoffeeType> getAvailableCoffeeTypes() { return EnumSet.of(CoffeeType.FILTER); }
     @Override
-    public boolean supports(CoffeeType type) { return type == CoffeeType.FILTER; }
+    public boolean supports(CoffeeType type) { return getAvailableCoffeeTypes().contains(type); }
 
     @Override
     public String toString() {
