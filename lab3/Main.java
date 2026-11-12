@@ -12,8 +12,8 @@ public class Main {
 
     public static void main(String[] args) {
         /*
-        Обработка главного меню.
-        */
+         * Обработка главного меню.
+         */
         machines.add(new DripCoffeeMaker());
         machines.add(new LatteMachine());
         machines.add(new GrinderCoffeeMachine());
@@ -47,8 +47,8 @@ public class Main {
 
     private static void printMenu() {
         /*
-        Выводит главное меню.
-        */
+         * Выводит главное меню.
+         */
         System.out.println("\n1. Показать устройства\n2. Добавить устройство\n3. Удалить устройство"
                 + "\n4. Изменить свойства\n5. Работа с устройством"
                 + "\n6. Случайные настройки\n7. Статистика кофейни\n0. Выход");
@@ -56,8 +56,8 @@ public class Main {
 
     private static void showMachines() {
         /*
-        Выводит устройства из общего списка.
-        */
+         * Выводит устройства из общего списка.
+         */
         if (machines.isEmpty()) {
             System.out.println("Нет устройств.");
             return;
@@ -69,15 +69,15 @@ public class Main {
 
     private static CoffeeMachine selectMachine() {
         /*
-        Запрашивает постоянный идентификатор устройства.
-
-        Returns:
-            Найденная кофемашина.
-
-        Raises:
-            IllegalStateException: если список пуст.
-            EndOfInputException: если ввод закончился.
-        */
+         * Запрашивает постоянный идентификатор устройства.
+         * 
+         * Returns:
+         * Найденная кофемашина.
+         * 
+         * Raises:
+         * IllegalStateException: если список пуст.
+         * EndOfInputException: если ввод закончился.
+         */
         if (machines.isEmpty()) {
             throw new IllegalStateException("Список пуст. Сначала добавьте устройство.");
         }
@@ -95,8 +95,8 @@ public class Main {
 
     private static void addMachine() {
         /*
-        Добавляет устройство выбранного класса с пустыми контейнерами.
-        */
+         * Добавляет устройство выбранного класса с пустыми контейнерами.
+         */
         if (machines.size() >= MAX_MACHINES) {
             throw new IllegalStateException("Достигнут предел: " + MAX_MACHINES + " устройств.");
         }
@@ -120,8 +120,8 @@ public class Main {
 
     private static void deleteMachine() {
         /*
-        Удаляет выключенное устройство из списка.
-        */
+         * Удаляет выключенное устройство из списка.
+         */
         CoffeeMachine machine = selectMachine();
         if (machine.isPowered()) {
             throw new IllegalStateException("Перед удалением выключите устройство.");
@@ -132,8 +132,8 @@ public class Main {
 
     private static void editMachine() {
         /*
-        Изменяет общее свойство или открывает настройки выбранного класса.
-        */
+         * Изменяет общее свойство или открывает настройки выбранного класса.
+         */
         CoffeeMachine machine = selectMachine();
         System.out.println("1. Фирма\n2. Модель\n3. Объём бака\n4. Температура кофе"
                 + "\n5. Настройки выбранного типа устройства\n0. Отмена");
@@ -146,18 +146,20 @@ public class Main {
             case 4 -> machine.setTemperature(readInt("Температура кофе (°C): ",
                     CoffeeMachine.MIN_TEMPERATURE, CoffeeMachine.MAX_TEMPERATURE));
             case 5 -> editSpecificSettings(machine);
-            case 0 -> { return; }
+            case 0 -> {
+                return;
+            }
         }
         System.out.println(machine);
     }
 
     private static void editSpecificSettings(CoffeeMachine machine) {
         /*
-        Изменяет настройки конкретного устройства.
-
-        Args:
-            machine: выбранная кофемашина.
-        */
+         * Изменяет настройки конкретного устройства.
+         * 
+         * Args:
+         * machine: выбранная кофемашина.
+         */
         if (machine instanceof DripCoffeeMaker drip) {
             System.out.println("1. Контейнер кофе\n2. Крепость\n3. Объём порции\n0. Отмена");
             switch (readInt("Свойство: ", 0, 3)) {
@@ -168,7 +170,9 @@ public class Main {
                         DripCoffeeMaker.MIN_STRENGTH, DripCoffeeMaker.MAX_STRENGTH));
                 case 3 -> drip.choosePortion(readInt("Объём порции (мл): ",
                         DripCoffeeMaker.MIN_PORTION_ML, DripCoffeeMaker.MAX_PORTION_ML));
-                case 0 -> { return; }
+                case 0 -> {
+                    return;
+                }
             }
         } else if (machine instanceof LatteMachine latte) {
             System.out.println("1. Молочный бак\n2. Температура молока\n3. Доля молока"
@@ -185,7 +189,9 @@ public class Main {
                         LatteMachine.MAX_CAPSULE_CAPACITY));
                 case 5 -> latte.adjustFoam(readInt("Уровень пенки: ",
                         CoffeeMachine.MIN_FOAM_LEVEL, CoffeeMachine.MAX_FOAM_LEVEL));
-                case 0 -> { return; }
+                case 0 -> {
+                    return;
+                }
             }
         } else if (machine instanceof GrinderCoffeeMachine grinder) {
             System.out.println("1. Контейнер зёрен\n2. Степень помола\n3. Крепость"
@@ -201,15 +207,17 @@ public class Main {
                 case 4 -> grinder.setWasteCapacity(readInt("Вместимость (г): ",
                         Math.max(GrinderCoffeeMachine.MIN_WASTE_CAPACITY, grinder.getWaste()),
                         GrinderCoffeeMachine.MAX_WASTE_CAPACITY));
-                case 0 -> { return; }
+                case 0 -> {
+                    return;
+                }
             }
         }
     }
 
     private static void operateMachine() {
         /*
-        Обрабатывает меню выбранного устройства до возврата в главное меню.
-        */
+         * Обрабатывает меню выбранного устройства до возврата в главное меню.
+         */
         CoffeeMachine machine = selectMachine();
         boolean running = true;
         while (running) {
@@ -224,7 +232,7 @@ public class Main {
                     case 2 -> machine.turnOff();
                     case 3 -> selectCoffee(machine);
                     case 4 -> machine.adjustFoam(readInt("Уровень пенки: ",
-                        CoffeeMachine.MIN_FOAM_LEVEL, CoffeeMachine.MAX_FOAM_LEVEL));
+                            CoffeeMachine.MIN_FOAM_LEVEL, CoffeeMachine.MAX_FOAM_LEVEL));
                     case 5 -> System.out.println(machine.brew());
                     case 6 -> addWater(machine);
                     case 7 -> machine.drainWater();
@@ -244,11 +252,11 @@ public class Main {
 
     private static void selectCoffee(CoffeeMachine machine) {
         /*
-        Выбирает напиток из доступных для устройства.
-
-        Args:
-            machine: выбранная кофемашина.
-        */
+         * Выбирает напиток из доступных для устройства.
+         * 
+         * Args:
+         * machine: выбранная кофемашина.
+         */
         Set<CoffeeType> types = machine.getAvailableCoffeeTypes();
         int number = 1;
         for (CoffeeType type : types) {
@@ -266,8 +274,8 @@ public class Main {
 
     private static void addWater(CoffeeMachine machine) {
         /*
-        Запрашивает количество воды в пределах свободного места в баке.
-        */
+         * Запрашивает количество воды в пределах свободного места в баке.
+         */
         int free = machine.getWaterCapacity() - machine.getWater();
         if (free == 0) {
             throw new IllegalStateException("Бак уже заполнен.");
@@ -277,11 +285,11 @@ public class Main {
 
     private static void specialAction(CoffeeMachine machine) {
         /*
-        Выполняет действие, характерное для выбранного класса.
-
-        Args:
-            machine: выбранная кофемашина.
-        */
+         * Выполняет действие, характерное для выбранного класса.
+         * 
+         * Args:
+         * machine: выбранная кофемашина.
+         */
         if (machine instanceof DripCoffeeMaker drip) {
             System.out.println("1. Добавить молотый кофе\n2. Заменить фильтр"
                     + "\n3. Переключить подогрев\n4. Удалить молотый кофе\n0. Отмена");
@@ -291,7 +299,9 @@ public class Main {
                 case 2 -> drip.replaceFilter();
                 case 3 -> drip.toggleWarming();
                 case 4 -> drip.discardGroundCoffee();
-                case 0 -> { return; }
+                case 0 -> {
+                    return;
+                }
             }
         } else if (machine instanceof LatteMachine latte) {
             System.out.println("1. Добавить молоко\n2. Добавить капсулы"
@@ -303,7 +313,9 @@ public class Main {
                         latte.getCapsuleCapacity() - latte.getCapsules()));
                 case 3 -> latte.rinseMilkSystem();
                 case 4 -> latte.discardMilk();
-                case 0 -> { return; }
+                case 0 -> {
+                    return;
+                }
             }
         } else if (machine instanceof GrinderCoffeeMachine grinder) {
             System.out.println("1. Добавить зёрна\n2. Измельчить порцию"
@@ -314,15 +326,17 @@ public class Main {
                 case 2 -> grinder.grindPortion();
                 case 3 -> grinder.emptyWaste();
                 case 4 -> grinder.discardBeans();
-                case 0 -> { return; }
+                case 0 -> {
+                    return;
+                }
             }
         }
     }
 
     private static void randomizeMachine() {
         /*
-        Выбирает случайные настройки с помощью метода конкретного класса.
-        */
+         * Выбирает случайные настройки с помощью метода конкретного класса.
+         */
         CoffeeMachine machine = selectMachine();
         machine.randomizeSettings();
         System.out.println("Новые настройки: " + machine);
@@ -330,8 +344,8 @@ public class Main {
 
     private static void showStatistics() {
         /*
-        Выводит статистику текущих устройств и самую активную кофемашину.
-        */
+         * Выводит статистику текущих устройств и самую активную кофемашину.
+         */
         if (machines.isEmpty()) {
             System.out.println("Нет устройств.");
             return;
@@ -363,8 +377,8 @@ public class Main {
 
     private static int readAmount(String prompt, int free) {
         /*
-        Запрашивает количество ингредиента, если контейнер не заполнен.
-        */
+         * Запрашивает количество ингредиента, если контейнер не заполнен.
+         */
         if (free <= 0) {
             throw new IllegalStateException("Контейнер уже заполнен.");
         }
@@ -373,16 +387,16 @@ public class Main {
 
     private static int readInt(String prompt, int min, int max) {
         /*
-        Читает целое число в заданном диапазоне, повторяя запрос при ошибке.
-
-        Args:
-            prompt: текст приглашения ко вводу.
-            min: нижняя граница диапазона.
-            max: верхняя граница диапазона.
-
-        Returns:
-            Целое число от min до max включительно.
-        */
+         * Читает целое число в заданном диапазоне, повторяя запрос при ошибке.
+         * 
+         * Args:
+         * prompt: текст приглашения ко вводу.
+         * min: нижняя граница диапазона.
+         * max: верхняя граница диапазона.
+         * 
+         * Returns:
+         * Целое число от min до max включительно.
+         */
         while (true) {
             String line = readLine(prompt + "[" + min + "-" + max + "] ").strip();
             try {
@@ -399,11 +413,11 @@ public class Main {
 
     private static String readText(String prompt) {
         /*
-        Запрашивает название до успешной проверки.
-
-        Returns:
-            Название без лишних пробелов.
-        */
+         * Запрашивает название до успешной проверки.
+         * 
+         * Returns:
+         * Название без лишних пробелов.
+         */
         while (true) {
             try {
                 return CoffeeMachine.validateText(readLine(prompt));
@@ -415,17 +429,17 @@ public class Main {
 
     private static String readLine(String prompt) {
         /*
-        Читает строку из консоли.
-
-        Args:
-            prompt: текст приглашения ко вводу.
-
-        Returns:
-            Введённая строка.
-
-        Raises:
-            EndOfInputException: если ввод закончился.
-        */
+         * Читает строку из консоли.
+         * 
+         * Args:
+         * prompt: текст приглашения ко вводу.
+         * 
+         * Returns:
+         * Введённая строка.
+         * 
+         * Raises:
+         * EndOfInputException: если ввод закончился.
+         */
         System.out.print(prompt);
         if (!INPUT.hasNextLine()) {
             throw new EndOfInputException();
