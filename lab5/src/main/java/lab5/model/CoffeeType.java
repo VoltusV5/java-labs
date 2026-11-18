@@ -1,3 +1,5 @@
+package lab5.model;
+
 // CoffeeType.java
 
 public enum CoffeeType {

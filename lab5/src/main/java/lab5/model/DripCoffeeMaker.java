@@ -1,3 +1,5 @@
+package lab5.model;
+
 // DripCoffeeMaker.java
 
 import java.util.EnumSet;

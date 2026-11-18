@@ -1,3 +1,5 @@
+package lab5.model;
+
 // GrinderCoffeeMachine.java
 
 import java.util.EnumSet;

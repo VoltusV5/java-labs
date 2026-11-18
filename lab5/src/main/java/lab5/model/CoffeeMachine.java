@@ -1,3 +1,5 @@
+package lab5.model;
+
 // CoffeeMachine.java
 
 import java.util.Set;
@@ -15,9 +17,6 @@ public abstract class CoffeeMachine {
     private static final int CLEANING_WATER_ML = 100;
     private static final int CUPS_BEFORE_CLEANING = 10;
     private static final double MILLILITERS_PER_LITER = 1000.0;
-    private static int nextId = 1;
-
-    private final int id;
     private String manufacturer;
     private String model;
     private int waterCapacity;
@@ -42,13 +41,8 @@ public abstract class CoffeeMachine {
         this.model = validateText(model);
         checkRange(waterCapacity, MIN_CAPACITY, MAX_CAPACITY, "Объём бака");
         this.waterCapacity = waterCapacity;
-        if (nextId == Integer.MAX_VALUE) {
-            throw new IllegalStateException("Закончились id устройств.");
-        }
-        id = nextId++;
     }
 
-    public int getId() { return id; }
     public String getManufacturer() { return manufacturer; }
     public String getModel() { return model; }
     public int getWaterCapacity() { return waterCapacity; }
@@ -343,9 +337,9 @@ public abstract class CoffeeMachine {
         /*
         Возвращает общую информацию об устройстве.
         */
-        return String.format("ID %d | %s | %s %s | %s | вода: %d/%d мл (бак %.2f л)"
+        return String.format("%s | %s %s | %s | вода: %d/%d мл (бак %.2f л)"
                 + " | кофе: %s | пенка: %d | температура: %d °C | чашек: %d | до очистки: %d",
-                id, getDeviceType(), manufacturer, model, powered ? "включено" : "выключено",
+                getDeviceType(), manufacturer, model, powered ? "включено" : "выключено",
                 water, waterCapacity, getWaterCapacityLiters(), coffeeType == null ? "не выбран" : coffeeType,
                 foamLevel, temperature, cupsMade, CUPS_BEFORE_CLEANING - cupsSinceCleaning);
     }
